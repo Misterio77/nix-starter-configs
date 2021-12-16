@@ -13,19 +13,19 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Other community flakes
+    # Extra community flakes
     # Add any cool flakes you need
-    # nur.url = "github:nix-community/NUR";
-    # impermanence.url = "github:riscadoa/impermanence";
-    # nix-colors.url = "github:misterio77/nix-colors";
+    # nur.url = "github:nix-community/NUR"; # User contributed pkgs and modules
+    # impermanence.url = "github:riscadoa/impermanence"; # Utilities for opt-in persistance
+    # nix-colors.url = "github:misterio77/nix-colors"; # Color schemes for usage with home-manager
   };
 
   outputs = { self, nixpkgs, home-manager, utils, ... }@inputs: {
     # Overlayed packages
     overlay = (import ./overlays.nix);
 
-    # This repos plus any other overlays you use
-    # If you want to use out-of-nixpkgs-tree packages, add their overlays here.
+    # This repo's overlay plus any other overlays you use
+    # If you want to use packages from flakes that are not nixpkgs, add their overlays here.
     overlays = [ self.overlay nur.overlay ];
 
     # System configurations
@@ -52,7 +52,8 @@
         extraModules = [{ nixpkgs.overlays = self.overlays; }];
       };
     };
-  } // utils.lib.eachDefaultSystem (system:
+  }
+  // utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; overlays = self.overlays; };
       hm = home-manager.defaultPackage."${system}";
