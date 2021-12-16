@@ -71,6 +71,9 @@
   // utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; overlays = self.overlays; };
+      nix = pkgs.writeShellScriptBin "nix" ''
+        exec ${pkgs.nixFlakes}/bin/nix --experimental-features "nix-command flakes" "$@"
+      '';
       hm = home-manager.defaultPackage."${system}";
     in
     {

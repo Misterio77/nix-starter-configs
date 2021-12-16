@@ -22,6 +22,14 @@
   # Comment out if you wish to disable unfree packages for your system
   nixpkgs.config.allowUnfree = true;
 
+  # Enable flakes and 'nix' command
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   # This will make all users source .nix-profile on login, activating home
   # manager automatically. Will allow you to use home-manager standalone on
   # setups with opt-in persistance.
