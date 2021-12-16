@@ -1,8 +1,12 @@
-# This file should hold stuff you use across all hosts
 { inputs, pkgs, ... }: {
+  imports = [
+    # Add external nixos modules here
+    # inputs.hardware.nixosModules.common-cpu-amd
+    ./hardware-configuration.nix
+  ];
+
   system.stateVersion = "21.11";
-  # Uncomment to enable unfree packages for your systems. You can also put this
-  # on the specific host
+  # Uncomment to enable unfree packages for your system
   # nixpkgs.config.allowUnfree = true;
 
   # This will make all users source .nix-profile on login, activating home
