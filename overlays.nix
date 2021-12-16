@@ -1,4 +1,4 @@
-# Your overlays should go here
+# Your overlays should go here (https://nixos.wiki/wiki/Overlays)
 final: prev: {
   # example = prev.example.overrideAttrs (oldAttrs: rec {
   # ...
