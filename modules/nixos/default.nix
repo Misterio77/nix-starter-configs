@@ -1,4 +1,4 @@
-# Add your nixos modules to this folder, then import them here.
+# Add your custom nixos modules to this folder, then import them here.
 {
   imports = [
     # ./example.nix
