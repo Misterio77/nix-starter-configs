@@ -25,31 +25,46 @@
     overlay = (import ./overlays.nix);
 
     # This repo's overlay plus any other overlays you use
-    # If you want to use packages from flakes that are not nixpkgs, add their overlays here.
-    overlays = [ self.overlay nur.overlay ];
+    # If you want to use packages from flakes that are not nixpkgs (such as NUR), add their overlays here.
+    overlays = [
+      self.overlay
+      # nur.overlay
+    ];
 
     # System configurations
     # Accessible via 'nixos-rebuild --flake'
     nixosConfigurations = {
+      # TODO: Replace with your hostname
       cool-computer = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+
         modules = [
           ./configuration.nix
+          # Adds your overlay and packages to nixpkgs
           { nixpkgs.overlays = self.overlays; }
         ];
+        # Pass our flake inputs into the config
+        specialArgs = { inherit inputs; };
       };
     };
 
     # Home configurations
     # Accessible via 'home-manager --flake'
     homeConfigurations = {
-      "you@cool-computer" = home-manager.lib.homeManagerConfiguration {
-        system = "x86_64-linux";
+      # TODO: Replace with your username@hostname
+      "you@cool-computer" = home-manager.lib.homeManagerConfiguration rec {
+        # TODO: Replace with your username
         username = "you";
-        homeDirectory = "/home/you";
+        homeDirectory = "/home/${username}";
+        system = "x86_64-linux";
+
         configuration = ./home.nix;
-        extraModules = [{ nixpkgs.overlays = self.overlays; }];
+        extraModules = [
+          # Adds your overlay and packages to nixpkgs
+          { nixpkgs.overlays = self.overlays; }
+        ];
+        # Pass our flake inputs into the config
+        extraSpecialArgs = { inherit inputs; };
       };
     };
   }

@@ -1,12 +1,14 @@
 # This is your system's configuration file.
+# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 
 { inputs, lib, config, pkgs, ... }: {
   imports = [
     # If you want to use modules from other flakes (such as nixos-hardware), use something like:
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
-    # It's extremely recommended you take a look at https://github.com/nixos/nixos-hardware
-    # and import modules relevant to your hardware (the above examples are for AMD CPUs and SSDs).
+    # It's strongly recommended you take a look at
+    # https://github.com/nixos/nixos-hardware
+    # and import modules relevant to your hardware.
 
     # Import your generated hardware configuration
     ./hardware-configuration.nix
@@ -14,10 +16,10 @@
     # Feel free to split up your configuration and import pieces of it here.
   ];
 
-  # Set your hostname
+  # TODO: Set your hostname
   networking.hostName = "cool-computer";
 
-  # Comment out to disable unfree packages for your system
+  # Comment out if you wish to disable unfree packages for your system
   nixpkgs.config.allowUnfree = true;
 
   # This will make all users source .nix-profile on login, activating home
@@ -33,5 +35,5 @@
     lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; })
   ) inputs;
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "22.05";
 }
