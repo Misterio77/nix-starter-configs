@@ -28,9 +28,9 @@ Assuming you have a basic NixOS installation up and running:
 - Run `home-manager switch --flake .` to apply home configuration
 - Reboot!
 
-### How to's
+## How to's
 
-#### Customize your NixOS configuration
+### Customize your NixOS configuration
 
 Use the `configuration.nix` file.
 
