@@ -22,7 +22,7 @@ Assuming you have a basic NixOS installation up and running:
 - Create a remote repo (github, gitlab, sr.ht, etc) and push your changes for safekeeping
 
 ### Bootstrapping
-- Run `nix-shell` (or `nix develop`, if you already have flakes enabled) to bootstrap into flake-enabled nix and home-manager.
+- Run `nix develop --experimental-features "nix-command flakes"` to bootstrap into flake-enabled nix and home-manager.
 - Run `sudo nixos-rebuild switch --flake .` to apply system configuration
 - Run `home-manager switch --flake .` to apply home configuration
 - Reboot!
