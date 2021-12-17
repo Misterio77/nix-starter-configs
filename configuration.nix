@@ -19,10 +19,31 @@
   # TODO: Set your hostname
   networking.hostName = "cool-computer";
 
-  # Comment out if you wish to disable unfree packages for your system
+  # TODO: This is just an example, be sure to use whatever bootloader you prefer
+  boot.loader.systemd-boot.enable = true;
+
+  # TODO: Configure your users as usual.
+  users.users = {
+    you = {
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        # Add your SSH public key(s) here.
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDci4wJghnRRSqQuX1z2xeaUR+p/muKzac0jw0mgpXE2T/3iVlMJJ3UXJ+tIbySP6ezt0GVmzejNOvUarPAm0tOcW6W0Ejys2Tj+HBRU19rcnUtf4vsKk8r5PW5MnwS8DqZonP5eEbhW2OrX5ZsVyDT+Bqrf39p3kOyWYLXT2wA7y928g8FcXOZjwjTaWGWtA+BxAvbJgXhU9cl/y45kF69rfmc3uOQmeXpKNyOlTk6ipSrOfJkcHgNFFeLnxhJ7rYxpoXnxbObGhaNqn7gc5mt+ek+fwFzZ8j6QSKFsPr0NzwTFG80IbyiyrnC/MeRNh7SQFPAESIEP8LK3PoNx2l1M+MjCQXsb4oIG2oYYMRa2yx8qZ3npUOzMYOkJFY1uI/UEE/j/PlQSzMHfpmWus4o2sijfr8OmVPGeoU/UnVPyINqHhyAd1d3Iji3y3LMVemHtp5wVcuswABC7IRVVKZYrMCXMiycY5n00ch6XTaXBwCY00y8B3Mzkd7Ofq98YHc= (none)"
+      ];
+    };
+  };
+
+  # This setups SSH for the system (with SSH keys ONLY). Feel free to remove if you don't need it.
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+    permitRootLogin = "no";
+  };
+
+  # Remove if you wish to disable unfree packages for your system
   nixpkgs.config.allowUnfree = true;
 
-  # Enable flakes and 'nix' command
+  # Enable flakes and new 'nix' command
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -42,6 +63,4 @@
   nix.registry = lib.mapAttrs' (n: v:
     lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; })
   ) inputs;
-
-  system.stateVersion = "22.05";
 }

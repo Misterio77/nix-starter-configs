@@ -4,7 +4,7 @@
 { inputs, lib, config, pkgs, ... }: {
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors), use something like:
-    # inputs.nix-colors.nixosModule
+    # inputs.nix-colors.homeManagerModule
 
     # Feel free to split up your configuration and import pieces of it here.
   ];
@@ -12,7 +12,7 @@
   # Comment out if you wish to disable unfree packages for your system
   nixpkgs.config.allowUnfree = true;
 
-  # TODO: Add stuff for your user as you see fit:
+  # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 
@@ -22,6 +22,4 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-
-  home.stateVersion = "22.05";
 }

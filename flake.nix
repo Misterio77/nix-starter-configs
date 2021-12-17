@@ -22,7 +22,7 @@
 
   outputs = { self, nixpkgs, home-manager, utils, ... }@inputs: {
     # Overlayed packages
-    overlay = (import ./overlays.nix);
+    overlay = (import ./overlays);
 
     # This repo's overlay plus any other overlays you use
     # If you want to use packages from flakes that are not nixpkgs (such as NUR), add their overlays here.
@@ -42,6 +42,8 @@
           ./configuration.nix
           # Adds your overlay and packages to nixpkgs
           { nixpkgs.overlays = self.overlays; }
+          # Adds your custom nixos modules
+          ./modules/nixos
         ];
         # Pass our flake inputs into the config
         specialArgs = { inherit inputs; };
@@ -62,6 +64,8 @@
         extraModules = [
           # Adds your overlay and packages to nixpkgs
           { nixpkgs.overlays = self.overlays; }
+          # Adds your custom home-manager modules
+          ./modules/home-manager
         ];
         # Pass our flake inputs into the config
         extraSpecialArgs = { inherit inputs; };
