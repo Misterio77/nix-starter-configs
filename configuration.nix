@@ -22,7 +22,8 @@
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
   boot.loader.systemd-boot.enable = true;
 
-  # TODO: Configure your users as usual.
+  # TODO: Configure your system-wide user settings (stuff on the user
+  # environment should instead go to home.nix)
   users.users = {
     # TODO: Replace with your username
     you = {
@@ -30,6 +31,8 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
+      # Be sure to add any other groups you need
+      extraGroups = [ "wheel" ];
     };
   };
 
@@ -49,11 +52,12 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    autoOptimiseStore = true;
   };
 
-  # This will make all users source .nix-profile on login, activating home
-  # manager automatically. Will allow you to use home-manager standalone on
-  # setups with opt-in persistance.
+  # This will make all users activate their home-manager profile upon login, if
+  # it exists and is not activated yet. This is useful for setups with opt-in
+  # persistance, avoiding having to manually activate every reboot.
   environment.loginShellInit = ''
     [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
   '';
@@ -61,6 +65,6 @@
   # This will add your inputs as registries, making operations with them
   # consistent with your flake inputs.
   nix.registry = lib.mapAttrs' (n: v:
-    lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; })
+    lib.nameValuePair (n) ({ flake = v; })
   ) inputs;
 }
