@@ -2,7 +2,7 @@
 
 This is a simple nix flake for getting started with NixOS + home-manager.
 
-## What this provides
+# What this provides
 
 - NixOS configuration on `nixos/configuration.nix`, accessible via
   `nixos-rebuild --flake`
@@ -14,13 +14,13 @@ This is a simple nix flake for getting started with NixOS + home-manager.
 - Boilerplate for custom NixOS (`modules/nixos`) and home-manager
   (`modules/home-manager`) modules
 
-## Getting started
+# Getting started
 
 Assuming you have a basic NixOS booted up (either live or installed, anything
 works). Here's [a link to the latest NixOS downloads, just for
 you](https://nixos.org/download#download-nixos)
 
-### The repo
+## The repo
 
 - [Install git](https://nixos.wiki/wiki/git)
 - Clone this repo to somewhere acessible (somewhere in your home directory is
@@ -42,12 +42,14 @@ you](https://nixos.org/download#download-nixos)
 - Create a remote repo (github, gitlab, sr.ht, etc) and push your changes for
   safekeeping (or at least copy your directory to somewhere safe, specially if you're on a installation medium)
 
-### Bootstrapping
+## Bootstrapping
+
 To get everything up and running, you need flake-enabled nix and home-manager.
 
 First off, check your nix version using `nix --version`.
 
-#### Version < 2.4
+### Version < 2.4
+
 Bummer, your nix version does not support flakes. But fear not!
 
 You _don't_ need to mess around with channels to get up and running.
@@ -65,18 +67,22 @@ Once you're bootstrapped, remember to run `nix flake lock` and commit the
 newly-created `flake.lock` into your repository, this will make future
 bootstraps reproductible.
 
-#### Version >= 2.4
+### Version >= 2.4
+
 Congrats, your nix version supports flakes! It's just hidden behind a feature flag.
 
 You can bootstrap with: 
 ```bash
-nix develop .#default
+nix develop --experimental-features "nix-command flakes" .#default
 ```
+
+The shell will also enable those experimental features, so no need for that
+argument after entering it.
 
 This should generate a `flake.lock`. Remember to commit it, as this will make
 future bootstraps reproductible.
 
-### Usage
+## Usage
 
 - Run `sudo nixos-rebuild switch --flake .#hostname` to apply your system
   configuration.
@@ -88,9 +94,9 @@ future bootstraps reproductible.
 And that's it, really! You're ready to have fun with your configurations using
 the latest and greatest nix3 flake-enabled command UX.
 
-## What next?
+# What next?
 
-### User password and secrets
+## User password and secrets
 
 For people fresh from installation: Unless you used `--no-root-passwd`,
 `nixos-install` prompted you for a root password. Use it to log into the root
@@ -107,7 +113,7 @@ There's also more advanced options for secret management, including some that
 can include them (encrypted) into your config repo and/or nix store, be sure to
 check them out if you're interested.
 
-### Include files using home-manager
+## Include files using home-manager
 
 Besides just adding packages to your environment, home-manager can also manage
 your dotfiles. I strongly recommend you do, it's awesome!
@@ -122,7 +128,7 @@ syntax, there's home-manager options (such as `xdg.configFile`) for including
 files from your nix-config repository into your config directories. Add your
 existing dotfiles to this repo and try it out!
 
-### Try opt-in persistance
+## Try opt-in persistance
 
 You might have noticed that there's impurity in your NixOS system, in the form
 of configuration files and other cruft your system generates when running. What
@@ -144,14 +150,14 @@ for mounting stuff you to keep to a separate partition/volume (such as
 can keep track of what you specifically asked to be kept.
 
 
-### Customize your NixOS configuration
+## Customize your NixOS configuration
 
 Use the `nixos/configuration.nix` file.
 
 For a list of options, see `man configuration.nix`. Also see [the
 manual](https://nixos.org/manual/nixos/stable/index.html#ch-configuration).
 
-### Customize your home-manager configuration
+## Customize your home-manager configuration
 
 Use the `home-manager/home.nix` file.
 
@@ -159,7 +165,7 @@ For a list of options, see `man home-configuration.nix`. Also see [the
 manual](https://rycee.gitlab.io/home-manager/index.html#ch-usage).
 
 
-### Adding packages
+## Adding packages
 
 Create a folder with the package name inside `pkgs`, and add a `default.nix`
 file containing a derivation. Be sure to also `callPackage` them on
@@ -167,7 +173,7 @@ file containing a derivation. Be sure to also `callPackage` them on
 
 See [the manual](https://nixos.org/manual/nixpkgs/stable/).
 
-### Adding overlays
+## Adding overlays
 
 Use the `overlay/default.nix` file.
 
@@ -175,7 +181,7 @@ If you're applying patches, you can keep them on the `overlay` folder as well.
 
 See [the wiki article](https://nixos.wiki/wiki/Overlays).
 
-### Adding your own modules
+## Adding your own modules
 
 Create a file for them on either `modules/nixos` or `modules/home-manager`. Be
 sure to also add them to the listing at `modules/nixos/default.nix` or
@@ -183,6 +189,6 @@ sure to also add them to the listing at `modules/nixos/default.nix` or
 
 See [the wiki article](https://nixos.wiki/wiki/Module).
 
-### Adding more hosts or users
+## Adding more hosts or users
 You can organize them by hostname and username on `nixos` and `home-manager`
 directories, be sure to also add them to `flake.nix`
