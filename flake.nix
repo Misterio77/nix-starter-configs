@@ -2,95 +2,95 @@
   description = "You new nix config";
 
   inputs = {
-    # Utilities for building flakes
-    utils.url = "github:numtide/flake-utils";
-
-    # Core nix flakes
+    # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hardware.url = "github:nixos/nixos-hardware";
 
-    # Home manager flake
+    # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Extra community flakes
-    # Add any cool flakes you need
-    # nur.url = "github:nix-community/NUR"; # User contributed pkgs and modules
+    # Utilities for building our flake
+    flake-utils.url = "github:numtide/flake-utils";
+
+    # Extra flakes for modules, packages, etc
+    hardware.url = "github:nixos/nixos-hardware"; # Convenience modules for hardware-specific quirks
+    # nur.url = "github:nix-community/NUR";              # User contributed pkgs and modules
+    # nix-colors.url = "github:misterio77/nix-colors";   # Color schemes for usage with home-manager
     # impermanence.url = "github:riscadoa/impermanence"; # Utilities for opt-in persistance
-    # nix-colors.url = "github:misterio77/nix-colors"; # Color schemes for usage with home-manager
+    # TODO: Add any other flakes you need
   };
 
-  outputs = { self, nixpkgs, home-manager, utils, ... }@inputs: {
-    # Overlayed packages
-    overlay = (import ./overlays);
-
-    # This repo's overlay plus any other overlays you use
-    # If you want to use packages from flakes that are not nixpkgs (such as NUR), add their overlays here.
-    overlays = [
-      self.overlay
-      # nur.overlay
-    ];
-
-    # System configurations
-    # Accessible via 'nixos-rebuild --flake'
-    nixosConfigurations = {
-      # TODO: Replace with your hostname
-      cool-computer = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = [
-          ./configuration.nix
-          # Adds your overlay and packages to nixpkgs
-          { nixpkgs.overlays = self.overlays; }
-          # Adds your custom nixos modules
-          ./modules/nixos
-        ];
-        # Pass our flake inputs into the config
-        specialArgs = { inherit inputs; };
-      };
-    };
-
-    # Home configurations
-    # Accessible via 'home-manager --flake'
-    homeConfigurations = {
-      # TODO: Replace with your username@hostname
-      "you@cool-computer" = home-manager.lib.homeManagerConfiguration rec {
-        # TODO: Replace with your username
-        username = "you";
-        homeDirectory = "/home/${username}";
-        system = "x86_64-linux";
-
-        configuration = ./home.nix;
-        extraModules = [
-          # Adds your overlay and packages to nixpkgs
-          { nixpkgs.overlays = self.overlays; }
-          # Adds your custom home-manager modules
-          ./modules/home-manager
-        ];
-        # Pass our flake inputs into the config
-        extraSpecialArgs = { inherit inputs; };
-      };
-    };
-  }
-  // utils.lib.eachDefaultSystem (system:
+  outputs = { nixpkgs, home-manager, flake-utils, ... }@inputs:
     let
-      pkgs = import nixpkgs { inherit system; overlays = self.overlays; };
-      nix = pkgs.writeShellScriptBin "nix" ''
-        exec ${pkgs.nixFlakes}/bin/nix --experimental-features "nix-command flakes" "$@"
-      '';
-      hm = home-manager.defaultPackage."${system}";
+      # Bring some functions into scope (from builtins and other flakes)
+      inherit (builtins) attrValues;
+      inherit (flake-utils.lib) eachSystemMap defaultSystems;
+      inherit (nixpkgs.lib) nixosSystem;
+      inherit (home-manager.lib) homeManagerConfiguration;
+      eachDefaultSystemMap = eachSystemMap defaultSystems;
     in
-    {
-      # Your custom packages, plus nixpkgs and overlayed stuff
-      # Accessible via 'nix build .#example' or 'nix build .#nixpkgs.example'
-      packages = {
-        nixpkgs = pkgs;
-      } // (import ./pkgs { inherit pkgs; });
-
-      # Devshell for bootstrapping plus editor utilities (fmt and LSP)
-      # Accessible via 'nix develop'
-      devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [ nix nixfmt rnix-lsp hm ];
+    rec {
+      # TODO: If you want to use packages exported from other flakes, add their overlays here.
+      # They will be added to your 'pkgs'
+      overlays = {
+        default = import ./overlay; # Our own overlay
+        # nur = nur.overlay
       };
-    });
+
+      # System configurations
+      # Accessible via 'nixos-rebuild'
+      nixosConfigurations = {
+        # FIXME: Replace with your hostname
+        cool-computer = nixosSystem {
+          system = "x86_64-linux";
+
+          modules = [
+            # >> Main NixOS configuration file <<
+            ./nixos/configuration.nix
+            # Add your custom NixOS modules
+            ./modules/nixos
+            # Add overlays
+            { nixpkgs.overlays = attrValues overlays; }
+          ];
+          # Make our inputs available to the config (for importing modules)
+          specialArgs = { inherit inputs; };
+        };
+      };
+
+      # Home configurations
+      # Accessible via 'home-manager'
+      homeConfigurations = {
+        # FIXME: Replace with your username@hostname
+        "you@cool-computer" = homeManagerConfiguration rec {
+          # FIXME: Replace with your username
+          username = "you";
+          homeDirectory = "/home/${username}";
+          system = "x86_64-linux";
+
+          # >> Main home-manager configuration file <<
+          configuration = ./home-manager/home.nix;
+          extraModules = [
+            # Add your custom home-manager modules
+            ./modules/home-manager
+            # Add overlays
+            { nixpkgs.overlays = attrValues overlays; }
+          ];
+          # Make our inputs available to the config (for importing modules)
+          extraSpecialArgs = { inherit inputs; };
+        };
+      };
+
+      # Packages
+      # Accessible via 'nix build'
+      packages = eachDefaultSystemMap (system:
+        # Propagate nixpkgs' packages, with our overlays applied
+        import nixpkgs { inherit system; overlays = attrValues overlays; }
+      );
+
+      # Devshell for bootstrapping
+      # Accessible via 'nix develop'
+      devShells = eachDefaultSystemMap (system: {
+        default = import ./shell.nix { pkgs = packages.${system}; };
+      });
+    };
 }
