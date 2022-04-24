@@ -1,6 +1,11 @@
 # Nix Starter Config
 
-This is a minimal (yet complete) nix flake for getting started with NixOS + home-manager.
+This is a simple nix flake for getting started with NixOS + home-manager.
+
+## Available versions:
+- [Minimal](https://github.com/Misterio77/nix-starter-config/tree/minimal): Includes just a flake for referring to a `configuration.nix` and a `home.nix`.
+- [Medium](https://github.com/Misterio77/nix-starter-config/tree/medium): Minimal + boilerplate for custom overlays, packages, and nixos/home-manager modules.
+- [Complete](https://github.com/Misterio77/nix-starter-config/tree/complete): Medium + hosts and users are located in their own directories.
 
 ## What this provides
 
