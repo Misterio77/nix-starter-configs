@@ -73,11 +73,12 @@ Congrats, your nix version supports flakes! It's just hidden behind a feature fl
 
 You can bootstrap with: 
 ```bash
-nix develop --experimental-features "nix-command flakes" .#default
+nix --experimental-features develop "nix-command flakes" .#default
 ```
 
-The shell will also enable those experimental features, so no need for that
-argument after entering it.
+The shell will also enable those experimental features, so no need to pass that
+argument while you're inside (or after installation, if you set the option that
+enables them globally).
 
 This should generate a `flake.lock`. Remember to commit it, as this will make
 future bootstraps reproductible.
@@ -113,27 +114,26 @@ There's also more advanced options for secret management, including some that
 can include them (encrypted) into your config repo and/or nix store, be sure to
 check them out if you're interested.
 
-## Include files using home-manager
+## Dotfile management with home-manager
 
 Besides just adding packages to your environment, home-manager can also manage
 your dotfiles. I strongly recommend you do, it's awesome!
 
-For full nix goodness, check out the home-manager modules with `man
+For full nix goodness, check out the home-manager options with `man
 home-configuration.nix`. Using them, you'll be able to fully configure any
-usual dotfile with nix syntax and abstractions (including your own powerful
-modules and functions).
+program with nix syntax and its powerful abstractions.
 
-Alternatively, if you're still not ready to rewrite all your configs in nix
+Alternatively, if you're still not ready to rewrite all your configs to nix
 syntax, there's home-manager options (such as `xdg.configFile`) for including
-files from your nix-config repository into your config directories. Add your
+files from your config repository into your usual dot directories. Add your
 existing dotfiles to this repo and try it out!
 
 ## Try opt-in persistance
 
 You might have noticed that there's impurity in your NixOS system, in the form
 of configuration files and other cruft your system generates when running. What
-if you change them in a whim? Boom, your system is not fully reproductible
-anymore.
+if you change them in a whim to get something working and forget about it?
+Boom, your system is not fully reproductible anymore.
 
 You can instead fully delete your `/` and `/home` on every boot! Nix is okay
 with a empty root on boot, and will happily reapply your configurations (as
@@ -150,45 +150,54 @@ for mounting stuff you to keep to a separate partition/volume (such as
 can keep track of what you specifically asked to be kept.
 
 
-## Customize your NixOS configuration
+## Adding custom packages
 
-Use the `nixos/configuration.nix` file.
+Something you want to use that's not in nixpkgs yet? You can easily build and
+iterate on a derivation (package) from this very repository.
 
-For a list of options, see `man configuration.nix`. Also see [the
-manual](https://nixos.org/manual/nixos/stable/index.html#ch-configuration).
-
-## Customize your home-manager configuration
-
-Use the `home-manager/home.nix` file.
-
-For a list of options, see `man home-configuration.nix`. Also see [the
-manual](https://rycee.gitlab.io/home-manager/index.html#ch-usage).
-
-
-## Adding packages
-
-Create a folder with the package name inside `pkgs`, and add a `default.nix`
+Create a folder with the desired name inside `pkgs`, and add a `default.nix`
 file containing a derivation. Be sure to also `callPackage` them on
 `pkgs/default.nix`.
 
-See [the manual](https://nixos.org/manual/nixpkgs/stable/).
+You'll be able to refer to that package from anywhere on your
+home-manager/nixos configurations, build them with `nix build .#package-name`,
+or bring them into your shell with `nix shell .#package-name`.
+
+See [the manual](https://nixos.org/manual/nixpkgs/stable/) for some tips on how
+to package stuff.
 
 ## Adding overlays
 
-Use the `overlay/default.nix` file.
+Found some outdated package on nixpkgs you need the latest version of? Perhaps
+you want to apply a patch to fix a behaviour you don't like? Nix makes it easy
+and manageble with overlays!
 
-If you're applying patches, you can keep them on the `overlay` folder as well.
+Use the `overlay/default.nix` file for this.
 
-See [the wiki article](https://nixos.wiki/wiki/Overlays).
+If you're creating patches, you can keep them on the `overlay` folder as well.
+
+See [the wiki article](https://nixos.wiki/wiki/Overlays) to see how it all
+works.
 
 ## Adding your own modules
+
+Got some configurations you want to create an abstraction of? Modules are the
+answer. These awesome files can expose _options_ and implement _configurations_
+based on how the options are set.
 
 Create a file for them on either `modules/nixos` or `modules/home-manager`. Be
 sure to also add them to the listing at `modules/nixos/default.nix` or
 `modules/home-manager/default.nix`.
 
-See [the wiki article](https://nixos.wiki/wiki/Module).
+See [the wiki article](https://nixos.wiki/wiki/Module) to learn more about
+them.
 
 ## Adding more hosts or users
+
 You can organize them by hostname and username on `nixos` and `home-manager`
-directories, be sure to also add them to `flake.nix`
+directories, be sure to also add them to `flake.nix`.
+
+NixOS makes it easy to share common configuration between hosts (you might want
+to create a common directory for these), while keeping everything in sync.
+home-manager can help you sync your environment (from editor to WM and
+everything in between) anywhere you use it. Have fun!
