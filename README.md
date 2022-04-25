@@ -89,7 +89,7 @@ future bootstraps reproductible.
 - Run `sudo nixos-rebuild switch --flake .#hostname` to apply your system
   configuration.
     - If you're still on a live installation medium, run `nixos-install --flake
-      .#hostname` instead, and reboot. Ignore the home-manager step for now.
+      .#hostname` instead, and reboot.
 - Run `home-manager switch --flake .#username@hostname` to apply your home
   configuration.
 
