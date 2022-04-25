@@ -5,11 +5,11 @@ This is a simple nix flake for getting started with NixOS + home-manager.
 # What this provides
 
 - NixOS configuration on `nixos/configuration.nix`, accessible via
-  `nixos-rebuild --flake`
+  `nixos-rebuild --flake .`
 - Home-manager configuration on `home-manager/home.nix`, accessible via
-  `home-manager --flake`
+  `home-manager --flake .`
 - Basic boilerplate for adding custom packages (under `pkgs`) and overlays
-  (under `overlays`). Acessible on your system, home config, as well as `nix
+  (under `overlays`). Accessible on your system, home config, as well as `nix
   build .#package-name`
 - Boilerplate for custom NixOS (`modules/nixos`) and home-manager
   (`modules/home-manager`) modules
