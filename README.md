@@ -20,6 +20,19 @@ Assuming you have a basic NixOS booted up (either live or installed, anything
 works). [Here's a link to the latest NixOS downloads, just for
 you](https://nixos.org/download#download-nixos).
 
+## I like you funny words, magic man
+
+Not sure what this all means?
+
+Take a look at [the learn hub on the NixOS
+website](https://nixos.org/learn.html) (scroll down to guides, the manuals, and
+the other awesome learning resources).
+
+Learning the basics of what Nix (the package manager) is, how the Nix language
+works, and a bit of NixOS basics should get you up and running. Don't worry if
+it seems a little confusing at first. Get confortable with the basic concepts
+and come back here to get your feet wet, it's the best way to learn!
+
 ## The repo
 
 - [Install git](https://nixos.wiki/wiki/git)
