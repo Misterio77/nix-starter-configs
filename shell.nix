@@ -22,6 +22,12 @@
   import nixpkgs { inherit system; }
 , ...
 }:
+let
+  # Enable experimental features without having to specify the argument
+  nix = (pkgs.writeShellScriptBin) "nix" ''
+    exec ${pkgs.nixFlakes}/bin/nix --experimental-features "nix-command flakes" "$@"
+  '';
+in
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [ nix home-manager git ];
 }
