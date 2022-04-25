@@ -23,8 +23,8 @@ you](https://nixos.org/download#download-nixos)
 ## The repo
 
 - [Install git](https://nixos.wiki/wiki/git)
-- Clone this repo to somewhere acessible (somewhere in your home directory is
-  good enough)
+- Hit "Use this template" on this repo (or clone this down and push to any
+  another git remote)
 
 - Add stuff you currently have on `/etc/nixos/` to `nixos` (usually
   `configuration.nix` and `hardware-configuration.nix`, when you're starting
@@ -39,8 +39,8 @@ you](https://nixos.org/download#download-nixos)
     ignore this step if you don't want to use home-manager just yet.
 - Take a look at `flake.nix`, making sure to fill out anything marked with
   FIXME (required) or TODO (usually tips or optional stuff you might want)
-- Create a remote repo (github, gitlab, sr.ht, etc) and push your changes for
-  safekeeping (or at least copy your directory to somewhere safe, specially if you're on a installation medium)
+- Push your changes! Or at least copy them somewhere if you're on a live
+  medium.
 
 ## Bootstrapping
 
