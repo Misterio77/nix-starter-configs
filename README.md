@@ -20,7 +20,7 @@ Assuming you have a basic NixOS booted up (either live or installed, anything
 works). [Here's a link to the latest NixOS downloads, just for
 you](https://nixos.org/download#download-nixos).
 
-## I like you funny words, magic man
+## I like your funny words, magic man
 
 Not sure what this all means?
 
