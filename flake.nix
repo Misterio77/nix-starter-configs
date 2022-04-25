@@ -47,9 +47,9 @@
           modules = [
             # >> Main NixOS configuration file <<
             ./nixos/configuration.nix
-            # Add your custom NixOS modules
+            # Adds your custom NixOS modules
             ./modules/nixos
-            # Add overlays
+            # Adds overlays
             { nixpkgs.overlays = attrValues overlays; }
           ];
           # Make our inputs available to the config (for importing modules)
@@ -70,9 +70,9 @@
           # >> Main home-manager configuration file <<
           configuration = ./home-manager/home.nix;
           extraModules = [
-            # Add your custom home-manager modules
+            # Adds your custom home-manager modules
             ./modules/home-manager
-            # Add overlays
+            # Adds overlays
             { nixpkgs.overlays = attrValues overlays; }
           ];
           # Make our inputs available to the config (for importing modules)
