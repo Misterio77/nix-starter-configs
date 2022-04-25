@@ -6,7 +6,7 @@
       if builtins.pathExists ./flake.lock
       then
       # If we have a lock, fetch locked nixpkgs
-        let lock = builtins.fromJSON (builtins.readFile ./flake.lock).nodes.nixpkgs.locked;
+        let lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
         in
         fetchTarball {
           url = "https://github.com/nixos/nixpkgs/archive/${lock.rev}.tar.gz";

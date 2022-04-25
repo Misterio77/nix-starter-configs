@@ -41,7 +41,7 @@
       # Accessible via 'nixos-rebuild'
       nixosConfigurations = {
         # FIXME: Replace with your hostname
-        replace-me = nixosSystem {
+        your-hostname = nixosSystem {
           system = "x86_64-linux";
 
           modules = [
@@ -61,9 +61,9 @@
       # Accessible via 'home-manager'
       homeConfigurations = {
         # FIXME: Replace with your username@hostname
-        "replace-me@me-too-please" = homeManagerConfiguration rec {
+        "your-name@your-hostname" = homeManagerConfiguration rec {
           # FIXME: Replace with your username
-          username = "replace-me-daddy";
+          username = "your-name";
           homeDirectory = "/home/${username}";
           system = "x86_64-linux";
 

@@ -113,12 +113,14 @@ the latest and greatest nix3 flake-enabled command UX.
 
 ## User password and secrets
 
-For people fresh from installation: Unless you used `--no-root-passwd`,
-`nixos-install` prompted you for a root password. Use it to log into the root
-account, set your own account's password imperatively with `passwd`, and
-disable root login (`sudo passwd -l root`). You can also use `--no-root-passwd`
-and instead set `initialPassword` for your user, for a temporary password upon
-install.
+You have basically two ways of setting up default passwords:
+- By default, you'll be prompted for a root password when installing with
+  `nixos-install`. After you reboot, be sure to add a password to your own
+  account and lock root using `sudo passwd -l root`.
+- Alternatively, you can specify `initialPassword` for your user. This will
+  give your account a default password, be sure to change it after rebooting!
+  If you do, you should pass `--no-root-passwd` to `nixos-install`, to skip
+  setting a password on the root account.
 
 If you don't want to set your password imperatively, you can also use
 `passwordFile` for safely and declaratively setting a password from a file
