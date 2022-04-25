@@ -17,14 +17,15 @@ This is a simple nix flake for getting started with NixOS + home-manager.
 # Getting started
 
 Assuming you have a basic NixOS booted up (either live or installed, anything
-works). Here's [a link to the latest NixOS downloads, just for
-you](https://nixos.org/download#download-nixos)
+works). [Here's a link to the latest NixOS downloads, just for
+you](https://nixos.org/download#download-nixos).
 
 ## The repo
 
 - [Install git](https://nixos.wiki/wiki/git)
-- Hit "Use this template" on this repo (or clone this down and push to any
-  another git remote)
+- [Hit "Use this
+  template"](https://github.com/Misterio77/nix-starter-config/generate) on this
+  repo (or clone this down and push to any another git remote)
 
 - Add stuff you currently have on `/etc/nixos/` to `nixos` (usually
   `configuration.nix` and `hardware-configuration.nix`, when you're starting
@@ -110,9 +111,10 @@ If you don't want to set your password imperatively, you can also use
 `passwordFile` for safely and declaratively setting a password from a file
 outside the nix store.
 
-There's also more advanced options for secret management, including some that
-can include them (encrypted) into your config repo and/or nix store, be sure to
-check them out if you're interested.
+There's also [more advanced options for secret
+management](https://nixos.wiki/wiki/Comparison_of_secret_managing_schemes),
+including some that can include them (encrypted) into your config repo and/or
+nix store, be sure to check them out if you're interested.
 
 ## Dotfile management with home-manager
 
@@ -136,8 +138,8 @@ if you change them in a whim to get something working and forget about it?
 Boom, your system is not fully reproductible anymore.
 
 You can instead fully delete your `/` and `/home` on every boot! Nix is okay
-with a empty root on boot, and will happily reapply your configurations (as
-long as `/nix` is intact).
+with a empty root on boot (all you need is `/boot` and `/nix`), and will
+happily reapply your configurations.
 
 There's two main approaches to this: mount a `tmpfs` (RAM disk) to `/`, or
 (using a filesystem such as btrfs or zfs) mount a blank snapshot and reset it
@@ -149,6 +151,12 @@ for mounting stuff you to keep to a separate partition/volume (such as
 `/nix/persist` or `/persist`). This makes everything vanish by default, and you
 can keep track of what you specifically asked to be kept.
 
+Here's some awesome blog posts about it:
+- [Erase your darlings](https://grahamc.com/blog/erase-your-darlings)
+- [Encrypted BTRFS with Opt-In State on
+  NixOS](https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html)
+- [NixOS: tmpfs as root](https://elis.nu/blog/2020/05/nixos-tmpfs-as-root/) and
+  [tmpfs as home](https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/)
 
 ## Adding custom packages
 
