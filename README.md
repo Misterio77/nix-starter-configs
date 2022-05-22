@@ -2,7 +2,7 @@
 
 This is a simple nix flake for getting started with NixOS + home-manager.
 
-[**Looking for the full version?**](https://github.com/Misterio77/nix-config/tree/main)
+[**Looking for the full version?**](https://github.com/Misterio77/nix-starter-config/tree/main)
 
 # What this provides
 
@@ -62,5 +62,5 @@ Check the [NixOS wiki](https://nixos.wiki/wiki/Flakes) for information on how to
 ## Full version
 
 Once you're confortable with this flake, take a look at the [full
-version](https://github.com/Misterio77/nix-config/tree/main), it includes
+version](https://github.com/Misterio77/nix-starter-config/tree/main), it includes
 boilerplate for overlays, custom packages, and more.
