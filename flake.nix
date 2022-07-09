@@ -16,14 +16,19 @@
       # Bring some functions into scope (from builtins and other flakes)
       inherit (nixpkgs.lib) nixosSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
-    in
-    rec {
+      # We'll use x86_64-linux for everything, but you can have hosts/homes for
+      # different systems and architectures if you want
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
       # System configurations
       # Accessible via 'nixos-rebuild'
       nixosConfigurations = {
         # FIXME: Replace with your hostname
         your-hostname = nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
+          pkgs = nixpkgs.legacyPackages.${system};
+
           # >> Main NixOS configuration file <<
           modules = [ ./nixos/configuration.nix ];
           # Make our inputs available to the config (for importing modules)
@@ -35,13 +40,11 @@
       # Accessible via 'home-manager'
       homeConfigurations = {
         # FIXME: Replace with your username@hostname
-        "your-name@your-hostname" = homeManagerConfiguration rec {
-          # FIXME: Replace with your username
-          username = "your-name";
-          homeDirectory = "/home/${username}";
-          system = "x86_64-linux";
+        "your-name@your-hostname" = homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+
           # >> Main home-manager configuration file <<
-          configuration = ./home-manager/home.nix;
+          modules = [ ./home-manager/home.nix ];
           # Make our inputs available to the config (for importing modules)
           extraSpecialArgs = { inherit inputs; };
         };

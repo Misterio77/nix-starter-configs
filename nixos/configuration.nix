@@ -29,14 +29,12 @@
   '';
 
   nix = {
-    # Make sure we have at least nix 2.4
-    # TODO: You can remove me if you're using NixOS 22.05+
-    package = pkgs.nixFlakes;
-    # Enable flakes and new 'nix' command
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-    autoOptimiseStore = true;
+    settings = {
+      # Enable flakes and new 'nix' command
+      experimental-features = "nix-command flakes";
+      # Deduplicate and optimize nix store
+      auto-optimise-store = true;
+    };
   };
 
   # Remove if you wish to disable unfree packages for your system
@@ -76,4 +74,7 @@
     # Use keys only. Remove if you want to SSH using password (not recommended)
     passwordAuthentication = false;
   };
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "22.05";
 }

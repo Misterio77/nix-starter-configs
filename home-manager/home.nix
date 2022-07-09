@@ -12,6 +12,12 @@
   # Comment out if you wish to disable unfree packages for your system
   nixpkgs.config.allowUnfree = true;
 
+  # TODO: Set your username
+  home = {
+    username = "your-name";
+    homeDirectory = "/home/your-name";
+  };
+
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
@@ -22,4 +28,7 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "22.05";
 }
