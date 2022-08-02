@@ -9,45 +9,32 @@
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # TODO: Add any other flake you might need
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
-    let
-      # Bring some functions into scope (from builtins and other flakes)
-      inherit (nixpkgs.lib) nixosSystem;
-      inherit (home-manager.lib) homeManagerConfiguration;
-      # We'll use x86_64-linux for everything, but you can have hosts/homes for
-      # different systems and architectures if you want
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      # System configurations
-      # Accessible via 'nixos-rebuild'
-      nixosConfigurations = {
-        # FIXME: Replace with your hostname
-        your-hostname = nixosSystem {
-          inherit system;
-          pkgs = nixpkgs.legacyPackages.${system};
+  outputs = { nixpkgs, home-manager, ... }@inputs: {
+    nixosConfigurations = {
+      # FIXME replace with your hostname
+      your-hostname = nixpkgs.lib.nixosSystem {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        system = "x86_64-linux";
 
-          # >> Main NixOS configuration file <<
-          modules = [ ./nixos/configuration.nix ];
-          # Make our inputs available to the config (for importing modules)
-          specialArgs = { inherit inputs; };
-        };
-      };
-
-      # Home configurations
-      # Accessible via 'home-manager'
-      homeConfigurations = {
-        # FIXME: Replace with your username@hostname
-        "your-name@your-hostname" = homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
-
-          # >> Main home-manager configuration file <<
-          modules = [ ./home-manager/home.nix ];
-          # Make our inputs available to the config (for importing modules)
-          extraSpecialArgs = { inherit inputs; };
-        };
+        modules = [ ./nixos/configuration.nix ];
+        # Pass inputs down to our config, so that they can consume flake inputs
+        specialArgs = { inherit inputs; };
       };
     };
+
+    homeConfigurations = {
+      # FIXME replace with your username@hostname
+      "your-name@your-hostname" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+        modules = [ ./home-manager/home.nix ];
+        # Pass inputs down to our config, so that they can consume flake inputs
+        extraSpecialArgs = { inherit inputs; };
+      };
+    };
+  };
 }
