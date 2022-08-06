@@ -31,7 +31,7 @@
 
     homeConfigurations = {
       # FIXME replace with your username@hostname
-      "your-name@your-hostname" = home-manager.lib.homeManagerConfiguration {
+      "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
         modules = [ ./home-manager/home.nix ];
