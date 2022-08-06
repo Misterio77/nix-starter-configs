@@ -91,6 +91,19 @@ the latest and greatest nix3 flake-enabled command UX.
 
 # What next?
 
+## Adding more hosts or users
+
+You can organize them by hostname and username on `nixos` and `home-manager`
+directories, be sure to also add them to `flake.nix`.
+
+You can take a look at my (beware, here be reproductible dragons)
+[configuration repo](https://github.com/misterio77/nix-config) for ideas.
+
+NixOS makes it easy to share common configuration between hosts (you might want
+to create a common directory for these), while keeping everything in sync.
+home-manager can help you sync your environment (from editor to WM and
+everything in between) anywhere you use it. Have fun!
+
 ## User password and secrets
 
 You have basically two ways of setting up default passwords:
@@ -194,16 +207,6 @@ sure to also add them to the listing at `modules/nixos/default.nix` or
 
 See [the wiki article](https://nixos.wiki/wiki/Module) to learn more about
 them.
-
-## Adding more hosts or users
-
-You can organize them by hostname and username on `nixos` and `home-manager`
-directories, be sure to also add them to `flake.nix`.
-
-NixOS makes it easy to share common configuration between hosts (you might want
-to create a common directory for these), while keeping everything in sync.
-home-manager can help you sync your environment (from editor to WM and
-everything in between) anywhere you use it. Have fun!
 
 # Troubleshooting / FAQ
 
