@@ -18,7 +18,6 @@
       # FIXME replace with your hostname
       your-hostname = nixpkgs.lib.nixosSystem {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        system = "x86_64-linux";
 
         modules = [ ./nixos/configuration.nix ];
         # Pass inputs down to our config, so that they can consume flake inputs
