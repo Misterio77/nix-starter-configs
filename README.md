@@ -25,6 +25,10 @@ Assuming you have a basic NixOS booted up (either live or installed, anything
 works). [Here's a link to the latest NixOS downloads, just for
 you](https://nixos.org/download#download-nixos).
 
+Alternatively, you can totally use `nix` and `home-manager` on your existing
+distro (or even on Darwin). [Install nix](https://nixos.org/download.html#nix)
+and follow along (just ignore the `nixos-*` commands).
+
 ## What template to chose?
 
 If this is your first trying flakes, or you're attempting to migrate your
@@ -49,7 +53,7 @@ and come back here to get your feet wet, it's the best way to learn!
 
 ## The repo
 
-- [Install git](https://nixos.wiki/wiki/git)
+- [Install git](https://nixos.wiki/wiki/git), if you haven't already.
 - Create a repository for your config, for example:
 ```bash
 cd ~/Documents
@@ -70,17 +74,17 @@ nix flake init -t github:misterio77/nix-starter-config#minimal
 # For standard version
 nix flake init -t github:misterio77/nix-starter-config#standard
 ```
-- Add stuff you currently have on `/etc/nixos/` to `nixos` (usually
-  `configuration.nix` and `hardware-configuration.nix`, when you're starting
-  out).
+- If you want to use NixOS: add stuff you currently have on `/etc/nixos/` to
+  `nixos` (usually `configuration.nix` and `hardware-configuration.nix`, when
+  you're starting out).
     - The included file has some options you might want, specially if you don't
       have a configuration ready. Make sure you have generated your own
       `hardware-configuration.nix`; if not, just mount your partitions to
       `/mnt` and run: `nixos-generate-config --root /mnt`.
-- If you're already using home-manager, add your stuff from `~/.config/nixpkgs`
+- If you want to use home-manager: add your stuff from `~/.config/nixpkgs`
   to `home-manager` (probably `home.nix`).
-  - I also include one with some simple options if you need. Feel free to
-    ignore this step if you don't want to use home-manager just yet.
+  - The included file is also a good starting point if you don't have a config
+    yet.
 - Take a look at `flake.nix`, making sure to fill out anything marked with
   FIXME (required) or TODO (usually tips or optional stuff you might want)
 - `git add` and `git push` your changes! Or at least copy them somewhere if
