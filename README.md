@@ -24,6 +24,15 @@ Assuming you have a basic NixOS booted up (either live or installed, anything
 works). [Here's a link to the latest NixOS downloads, just for
 you](https://nixos.org/download#download-nixos).
 
+## What template to chose?
+
+If this is your first trying flakes, or you're attempting to migrate your
+(simple) config to it; you should use the minimal version.
+
+If you're here looking for inspiration/tips/good practices (and you already use
+flakes), or you're migrating a config that already has overlays and custom
+packages; try the standard version.
+
 ## I like your funny words, magic man
 
 Not sure what this all means?
