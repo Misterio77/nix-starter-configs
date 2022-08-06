@@ -4,15 +4,19 @@ This repo contains a few a simple nix flakes for getting started with NixOS + ho
 
 # What this provides
 
-- NixOS configuration on `nixos/configuration.nix`, accessible via
-  `nixos-rebuild --flake .`
-- Home-manager configuration on `home-manager/home.nix`, accessible via
-  `home-manager --flake .`
-- Basic boilerplate for adding custom packages (under `pkgs`) and overlays
-  (under `overlay`). Accessible on your system, home config, as well as `nix
-  build .#package-name`.
-- Boilerplate for custom NixOS (`modules/nixos`) and home-manager
-  (`modules/home-manager`) modules
+- [Minimal version](./minimal):
+    - NixOS configuration on `nixos/configuration.nix`, accessible via
+      `nixos-rebuild --flake .`
+    - Home-manager configuration on `home-manager/home.nix`, accessible via
+      `home-manager --flake .`
+- [Standard version](./standard):
+    - Basic boilerplate for adding custom packages (under `pkgs`) and overlays
+      (under `overlay`). Accessible on your system, home config, as well as `nix
+      build .#package-name`.
+    - Boilerplate for custom NixOS (`modules/nixos`) and home-manager
+      (`modules/home-manager`) modules
+    - NixOS and home-manager configurations from minimal, and they should
+      also use your overlays and custom packages right out of the box.
 
 # Getting started
 
@@ -53,8 +57,8 @@ and come back here to get your feet wet, it's the best way to learn!
     ignore this step if you don't want to use home-manager just yet.
 - Take a look at `flake.nix`, making sure to fill out anything marked with
   FIXME (required) or TODO (usually tips or optional stuff you might want)
-- Push your changes! Or at least copy them somewhere if you're on a live
-  medium.
+- `git add` and `git push` your changes! Or at least copy them somewhere if
+  you're on a live medium.
 
 ## Bootstrapping
 
@@ -191,3 +195,16 @@ NixOS makes it easy to share common configuration between hosts (you might want
 to create a common directory for these), while keeping everything in sync.
 home-manager can help you sync your environment (from editor to WM and
 everything in between) anywhere you use it. Have fun!
+
+# Troubleshooting / FAQ
+
+Please [let me know](https://github.com/Misterio77/nix-starter-config/issues)
+any questions or issues you face with these templates, so I can add more info
+here!
+
+## Nix says my repo files don't exist, even though they do!
+
+Nix flakes only see files that git is currently tracked, so just `git add .`
+and you should be good to go. Files on `.gitignore`, of course, are invisible
+to nix - this is to guarantee your build won't depend on anything that is not
+on your repo.
