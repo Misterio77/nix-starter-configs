@@ -1,6 +1,7 @@
 # Nix Starter Config
 
-This repo contains a few a simple nix flakes for getting started with NixOS + home-manager.
+This repo contains a few a simple nix flake templates for getting started with
+NixOS + home-manager.
 
 # What this provides
 
@@ -49,10 +50,26 @@ and come back here to get your feet wet, it's the best way to learn!
 ## The repo
 
 - [Install git](https://nixos.wiki/wiki/git)
-- Create a repository for your config, for example: `cd ~/Documents && git init nix-config`
-- Choose your template:
-    - [Minimal version](./minimal): `nix flake init -t github:misterio77/nix-starter-config#minimal`
-    - [Standard version](./standard): `nix flake init -t github:misterio77/nix-starter-config#standard`
+- Create a repository for your config, for example:
+```bash
+cd ~/Documents
+git init nix-config
+cd nix-config
+```
+- Make sure you're running Nix 2.4+, and opt into the experimental `flakes` and `nix-command` features:
+```bash
+# Should be 2.4+
+nix --version
+export NIX_CONFIG="experimental-features = nix-command flakes"
+```
+- Get the template:
+```bash
+# For minimal version
+nix flake init -t github:misterio77/nix-starter-config#minimal
+
+# For standard version
+nix flake init -t github:misterio77/nix-starter-config#standard
+```
 - Add stuff you currently have on `/etc/nixos/` to `nixos` (usually
   `configuration.nix` and `hardware-configuration.nix`, when you're starting
   out).
@@ -69,14 +86,6 @@ and come back here to get your feet wet, it's the best way to learn!
 - `git add` and `git push` your changes! Or at least copy them somewhere if
   you're on a live medium.
 
-## Bootstrapping
-
-To get everything up and running, you need flake-enabled nix and/or
-home-manager.
-
-Simple, just run `nix develop` (if you've already enabled flakes) or
-`nix-shell`. You should be good to go now.
-
 ## Usage
 
 - Run `sudo nixos-rebuild switch --flake .#hostname` to apply your system
@@ -85,6 +94,7 @@ Simple, just run `nix develop` (if you've already enabled flakes) or
       .#hostname` instead, and reboot.
 - Run `home-manager switch --flake .#username@hostname` to apply your home
   configuration.
+  - If you don't have home-manager installed, try `nix shell nixpkgs#home-manager`.
 
 And that's it, really! You're ready to have fun with your configurations using
 the latest and greatest nix3 flake-enabled command UX.
@@ -220,3 +230,8 @@ Nix flakes only see files that git is currently tracked, so just `git add .`
 and you should be good to go. Files on `.gitignore`, of course, are invisible
 to nix - this is to guarantee your build won't depend on anything that is not
 on your repo.
+
+<!--
+# Learning resources
+TODO
+-->
