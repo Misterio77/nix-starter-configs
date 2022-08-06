@@ -1,86 +1,21 @@
 {
-  description = "You new nix config";
-
-  inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hardware.url = "github:nixos/nixos-hardware";
-
-    # Home manager
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # TODO: Add any other flake you might need
-  };
-
-  outputs = { nixpkgs, home-manager, ... }@inputs:
-    let
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-      systems = [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
-    in
-    rec {
-      # Your custom packages and modifications
-      overlays = {
-        default = import ./overlay { inherit inputs; };
+  description = "NixOS + standalone home-manager config flakes to get you started!";
+  outputs = inputs: {
+    templates = {
+      minimal = {
+        description = ''
+          Minimal flake - contains only the configs.
+          Contains the bare minimum to migrate your existing legacy configs to flakes.
+        '';
+        path = ./minimal;
       };
-
-      # Reusable nixos modules you might want to export
-      # These are usually stuff you would upstream into nixpkgs
-      nixosModules = import ./modules/nixos;
-      # Reusable home-manager modules you might want to export
-      # These are usually stuff you would upstream into home-manager
-      homeManagerModules = import ./modules/home-manager;
-
-      # Devshell for bootstrapping
-      # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system: {
-        default = legacyPackages.${system}.callPackage ./shell.nix { };
-      });
-
-      # Reexport nixpkgs with our overlays applied
-      # Acessible on our configurations, and through nix build, shell, run, etc.
-      legacyPackages = forAllSystems (system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues overlays;
-        }
-      );
-
-      nixosConfigurations = {
-        # FIXME replace with your hostname
-        your-hostname = nixpkgs.lib.nixosSystem {
-          pkgs = legacyPackages.x86_64-linux;
-
-          modules = [
-            # > Our main nixos configuration file <
-            ./nixos/configuration.nix
-          ] ++ (builtins.attrValues nixosModules); # Import our reusable nixos modules
-
-          # Pass inputs down to our config, so that they can consume flake inputs
-          specialArgs = { inherit inputs; };
-        };
-      };
-
-      homeConfigurations = {
-        # FIXME replace with your username@hostname
-        "your-name@your-hostname" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages.x86_64-linux;
-
-          modules = [
-            # > Our main home-manager configuration file <
-            ./home-manager/home.nix
-            # Import our reusable home-manager modules
-          ] ++ (builtins.attrValues homeManagerModules); # Import our reusable home-manager modules
-
-          # Pass inputs down to our config, so that they can consume flake inputs
-          extraSpecialArgs = { inherit inputs; };
-        };
+      standard = {
+        description = ''
+          Standard flake - augmented with boilerplate for custom packages, overlays, and reusable modules.
+          Perfect migration path for when you want to dive a little deeper.
+        '';
+        path = ./standard;
       };
     };
+  };
 }

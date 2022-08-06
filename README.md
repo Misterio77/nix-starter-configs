@@ -1,8 +1,6 @@
-# Nix Starter Config (Full version)
+# Nix Starter Config
 
-This is a simple nix flake for getting started with NixOS + home-manager.
-
-**[Looking for the minimal version?](https://github.com/Misterio77/nix-starter-config/tree/minimal)**
+This repo contains a few a simple nix flakes for getting started with NixOS + home-manager.
 
 # What this provides
 
@@ -12,7 +10,7 @@ This is a simple nix flake for getting started with NixOS + home-manager.
   `home-manager --flake .`
 - Basic boilerplate for adding custom packages (under `pkgs`) and overlays
   (under `overlay`). Accessible on your system, home config, as well as `nix
-  build .#package-name`
+  build .#package-name`.
 - Boilerplate for custom NixOS (`modules/nixos`) and home-manager
   (`modules/home-manager`) modules
 
@@ -38,10 +36,10 @@ and come back here to get your feet wet, it's the best way to learn!
 ## The repo
 
 - [Install git](https://nixos.wiki/wiki/git)
-- [Hit "Use this
-  template"](https://github.com/Misterio77/nix-starter-config/generate) on this
-  repo (or clone this down and push to any another git remote)
-
+- Create a repository for your config, for example: `cd ~/Documents && git init nix-config`
+- Choose your template:
+    - [Minimal version](./minimal): `nix flake init -t github:misterio77/nix-starter-config#minimal`
+    - [Standard version](./standard): `nix flake init -t github:misterio77/nix-starter-config#standard`
 - Add stuff you currently have on `/etc/nixos/` to `nixos` (usually
   `configuration.nix` and `hardware-configuration.nix`, when you're starting
   out).
