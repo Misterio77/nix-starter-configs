@@ -27,12 +27,9 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
-    in
-    rec {
+    in rec {
       # Your custom packages and modifications
-      overlays = {
-        default = import ./overlay { inherit inputs; };
-      };
+      overlays = { default = import ./overlay { inherit inputs; }; };
 
       # Reusable nixos modules you might want to export
       # These are usually stuff you would upstream into nixpkgs
@@ -53,38 +50,31 @@
         import inputs.nixpkgs {
           inherit system;
           overlays = builtins.attrValues overlays;
-        }
-      );
+        });
 
       nixosConfigurations = {
         # FIXME replace with your hostname
         your-hostname = nixpkgs.lib.nixosSystem {
           pkgs = legacyPackages.x86_64-linux;
-
-          modules = [
+          specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+          modules = (builtins.attrValues nixosModules) ++ [
             # > Our main nixos configuration file <
             ./nixos/configuration.nix
-          ] ++ (builtins.attrValues nixosModules); # Import our reusable nixos modules
-
-          # Pass inputs down to our config, so that they can consume flake inputs
-          specialArgs = { inherit inputs; };
+          ];
         };
       };
 
       homeConfigurations = {
         # FIXME replace with your username@hostname
-        "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages.x86_64-linux;
-
-          modules = [
-            # > Our main home-manager configuration file <
-            ./home-manager/home.nix
-            # Import our reusable home-manager modules
-          ] ++ (builtins.attrValues homeManagerModules); # Import our reusable home-manager modules
-
-          # Pass inputs down to our config, so that they can consume flake inputs
-          extraSpecialArgs = { inherit inputs; };
-        };
+        "your-username@your-hostname" =
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = legacyPackages.x86_64-linux;
+            extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
+            modules = (builtins.attrValues homeManagerModules) ++ [
+              # > Our main home-manager configuration file <
+              ./home-manager/home.nix
+            ];
+          };
       };
     };
 }

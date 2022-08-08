@@ -22,22 +22,21 @@
       # FIXME replace with your hostname
       your-hostname = nixpkgs.lib.nixosSystem {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-
+        specialArgs = { inherit inputs; }; # Pass flake inputs to our config
+        # > Our main nixos configuration file <
         modules = [ ./nixos/configuration.nix ];
-        # Pass inputs down to our config, so that they can consume flake inputs
-        specialArgs = { inherit inputs; };
       };
     };
 
     homeConfigurations = {
       # FIXME replace with your username@hostname
-      "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-
-        modules = [ ./home-manager/home.nix ];
-        # Pass inputs down to our config, so that they can consume flake inputs
-        extraSpecialArgs = { inherit inputs; };
-      };
+      "your-username@your-hostname" =
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
+          # > Our main home-manager configuration file <
+          modules = [ ./home-manager/home.nix ];
+        };
     };
   };
 }
