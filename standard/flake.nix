@@ -19,8 +19,7 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
     let
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-      systems = [
+      forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
         "i686-linux"
         "x86_64-linux"
@@ -29,7 +28,9 @@
       ];
     in rec {
       # Your custom packages and modifications
-      overlays = { default = import ./overlay { inherit inputs; }; };
+      overlays = {
+        default = import ./overlay { inherit inputs; };
+      };
 
       # Reusable nixos modules you might want to export
       # These are usually stuff you would upstream into nixpkgs
@@ -44,13 +45,22 @@
         default = legacyPackages.${system}.callPackage ./shell.nix { };
       });
 
-      # Reexport nixpkgs with our overlays applied
-      # Acessible on our configurations, and through nix build, shell, run, etc.
+      # This instantiates nixpkgs for each system listed above
+      # Allowing you to add overlays and configure it (e.g. allowUnfree)
+      # Our configurations will use these instances
+      # Your flake will also let you access your package set through nix build, shell, run, etc.
       legacyPackages = forAllSystems (system:
         import inputs.nixpkgs {
           inherit system;
+          # This adds our overlays to pkgs
           overlays = builtins.attrValues overlays;
-        });
+          # NOTE: Using `nixpkgs.config` in your NixOS config won't work
+          # Instead, you should set nixpkgs configs here
+          # (https://nixos.org/manual/nixpkgs/stable/#idm140737322551056)
+
+          # config.allowUnfree = true;
+        }
+      );
 
       nixosConfigurations = {
         # FIXME replace with your hostname
