@@ -37,9 +37,6 @@
     };
   };
 
-  # Remove if you wish to disable unfree packages for your system
-  nixpkgs.config.allowUnfree = true;
-
   # FIXME: Add the rest of your current configuration
 
   # TODO: Set your hostname

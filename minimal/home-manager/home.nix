@@ -9,9 +9,6 @@
     # Feel free to split up your configuration and import pieces of it here.
   ];
 
-  # Comment out if you wish to disable unfree packages for your system
-  nixpkgs.config.allowUnfree = true;
-
   # TODO: Set your username
   home = {
     username = "your-username";
