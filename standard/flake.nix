@@ -26,7 +26,8 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
-    in rec {
+    in
+    rec {
       # Your custom packages and modifications
       overlays = {
         default = import ./overlay { inherit inputs; };
@@ -76,15 +77,14 @@
 
       homeConfigurations = {
         # FIXME replace with your username@hostname
-        "your-username@your-hostname" =
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = legacyPackages.x86_64-linux;
-            extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
-            modules = (builtins.attrValues homeManagerModules) ++ [
-              # > Our main home-manager configuration file <
-              ./home-manager/home.nix
-            ];
-          };
+        "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
+          pkgs = legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
+          modules = (builtins.attrValues homeManagerModules) ++ [
+            # > Our main home-manager configuration file <
+            ./home-manager/home.nix
+          ];
+        };
       };
     };
 }
