@@ -1,5 +1,5 @@
 {
-  description = "You new nix config";
+  description = "Your new nix config";
 
   inputs = {
     # Nixpkgs

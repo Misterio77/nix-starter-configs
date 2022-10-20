@@ -1,5 +1,5 @@
 {
-  description = "You new nix config";
+  description = "Your new nix config";
 
   inputs = {
     # Nixpkgs
@@ -41,7 +41,7 @@
       homeManagerModules = import ./modules/home-manager;
 
       # Devshell for bootstrapping
-      # Acessible through 'nix develop' or 'nix-shell' (legacy)
+      # Accessible through 'nix develop' or 'nix-shell' (legacy)
       devShells = forAllSystems (system: {
         default = legacyPackages.${system}.callPackage ./shell.nix { };
       });
