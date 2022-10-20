@@ -43,7 +43,7 @@
       # Devshell for bootstrapping
       # Accessible through 'nix develop' or 'nix-shell' (legacy)
       devShells = forAllSystems (system: {
-        default = legacyPackages.${system}.callPackage ./shell.nix { };
+        default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
       });
 
       # This instantiates nixpkgs for each system listed above
