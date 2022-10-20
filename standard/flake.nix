@@ -63,6 +63,14 @@
         }
       );
 
+      # Export your custom packages
+      # These will be listed in 'nix flake show'
+      packages = forAllSystems (system:
+        import ./pkgs {
+          pkgs = nixpkgs.legacyPackages.${system};
+        }
+      );
+
       nixosConfigurations = {
         # FIXME replace with your hostname
         your-hostname = nixpkgs.lib.nixosSystem {
