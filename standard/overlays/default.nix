@@ -1,6 +1,5 @@
-# This file defines two overlays and composes them
-{ inputs, ... }:
-let
+# This file defines overlays
+{
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs { pkgs = final; };
 
@@ -12,5 +11,4 @@ let
     # ...
     # });
   };
-in
-inputs.nixpkgs.lib.composeManyExtensions [ additions modifications ]
+}
