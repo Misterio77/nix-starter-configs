@@ -16,12 +16,6 @@
         '';
         path = ./standard;
       };
-      multi-nixpkgs = {
-        description = ''
-          An example, based on the standard flake, on how to use two (or more) nixpkgs versions
-        '';
-        path = ./multi-nixpkgs;
-      };
     };
   };
 }
