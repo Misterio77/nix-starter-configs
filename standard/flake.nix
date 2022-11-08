@@ -17,8 +17,9 @@
     # nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
+      inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-linux"
         "i686-linux"
@@ -32,15 +33,13 @@
       # Acessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
-        in
-        import ./pkgs { inherit pkgs; }
+        in import ./pkgs { inherit pkgs; }
       );
       # Devshell for bootstrapping
       # Acessible through 'nix develop' or 'nix-shell' (legacy)
       devShells = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
-        in
-        import ./shell.nix { inherit pkgs; }
+        in import ./shell.nix { inherit pkgs; }
       );
 
       # Your custom packages and modifications, exported as overlays
@@ -55,12 +54,10 @@
       nixosConfigurations = {
         # FIXME replace with your hostname
         your-hostname = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; }; # Pass flake inputs to our config
-          modules = (builtins.attrValues nixosModules) ++ [
+          specialArgs = { inherit inputs outputs; };
+          modules = [
             # > Our main nixos configuration file <
             ./nixos/configuration.nix
-            # Our common nixpkgs config (unfree, overlays, etc)
-            (import ./nixpkgs-config.nix { inherit overlays; })
           ];
         };
       };
@@ -69,12 +66,10 @@
         # FIXME replace with your username@hostname
         "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
-          modules = (builtins.attrValues homeManagerModules) ++ [
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
             # > Our main home-manager configuration file <
             ./home-manager/home.nix
-            # Our common nixpkgs config (unfree, overlays, etc)
-            (import ./nixpkgs-config.nix { inherit overlays; })
           ];
         };
       };

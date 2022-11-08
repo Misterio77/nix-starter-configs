@@ -202,9 +202,9 @@ Found some outdated package on nixpkgs you need the latest version of? Perhaps
 you want to apply a patch to fix a behaviour you don't like? Nix makes it easy
 and manageble with overlays!
 
-Use the `overlay/default.nix` file for this.
+Use the `overlays/default.nix` file for this.
 
-If you're creating patches, you can keep them on the `overlay` folder as well.
+If you're creating patches, you can keep them on the `overlays` folder as well.
 
 See [the wiki article](https://nixos.wiki/wiki/Overlays) to see how it all
 works.
@@ -227,21 +227,6 @@ them.
 Please [let me know](https://github.com/Misterio77/nix-starter-config/issues)
 any questions or issues you face with these templates, so I can add more info
 here!
-
-## I'm trying to set nixpkgs.config options (e.g. allowUnfree), but they won't work!
-
-We instantiate nixpkgs and pass it to NixOS, to make the flake a bit simpler
-and ensure both configs have the same nixpkgs instance, this has the drawback
-of breaking nixpkgs configuration through in your NixOS config files.
-
-This is a design choice I made based on the `homeManagerConfiguration`
-interface, that requires a `pkgs` instance anyway. If you prefer to set them
-modularly, you'll have to remove the `pkgs` argument. If you use overlays,
-you'll have to pass them into your configuration (through specialArgs) or set
-`nixpkgs.overlays` right on the flake; in this case, you might prefer to use
-[home-manager as a NixOS
-module](https://nix-community.github.io/home-manager/index.html#sec-flakes-nixos-module)
-and set `home-manager.useGlobalPkgs = true`.
 
 ## Nix says my repo files don't exist, even though they do!
 

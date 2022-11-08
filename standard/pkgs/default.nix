@@ -1,5 +1,6 @@
-# When you add custom packages, list them here
-# These are similar to nixpkgs packages
-{ pkgs }: {
+# Custom packages, that can be defined similarly to ones from nixpkgs
+# You can build them using 'nix build .#example' or (legacy) 'nix-build -A example'
+
+{ pkgs ? (import ../nixpkgs.nix) { } }: {
   # example = pkgs.callPackage ./example { };
 }
