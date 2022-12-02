@@ -77,7 +77,7 @@
     };
   };
 
-  # This sets up a SSH server. Very important if you're setting up a headless system.
+  # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
   services.openssh = {
     enable = true;
@@ -88,5 +88,5 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "22.05";
+  system.stateVersion = "22.11";
 }
