@@ -17,11 +17,11 @@
   nixpkgs = {
     # You can add overlays here
     overlays = [
-      # If you want to use overlays your own flake exports (from overlays dir):
-      # outputs.overlays.modifications
-      # outputs.overlays.additions
+      # Add overlays your own flake exports (from overlays and pkgs dir):
+      outputs.overlays.modifications
+      outputs.overlays.additions
 
-      # Or overlays exported from other flakes:
+      # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
 
       # Or define it inline, for example:
