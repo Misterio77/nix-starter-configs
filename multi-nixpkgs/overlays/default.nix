@@ -1,5 +1,11 @@
+{ inputs, ... }:
 # This file defines overlays
 {
+  # Sets `unstable` under `pkgs` as the nixpkgs unstable channel
+  unstable = final: _prev: {
+    unstable = inputs.nixpkgs-unstable.legacyPackages.${final.system};
+  };
+
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs { pkgs = final; };
 
