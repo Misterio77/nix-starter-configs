@@ -105,6 +105,16 @@ the latest and greatest nix3 flake-enabled command UX.
 
 # What next?
 
+## Multiple nixpkgs channels
+
+`multi-nixpkgs` shows how to setup multiple nixpkgs channels. For example, using the stable channel you can add the unstable version of neovim like:
+
+```
+home.packages = with pkgs; [
+  unstable.neovim
+];
+```
+
 ## Adding more hosts or users
 
 You can organize them by hostname and username on `nixos` and `home-manager`
