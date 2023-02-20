@@ -105,6 +105,32 @@ the latest and greatest nix3 flake-enabled command UX.
 
 # What next?
 
+## Use home-manager as a NixOS module
+
+If you prefer to build your home configuration together with your NixOS one,
+it's pretty simple.
+
+Simply remove the `homeConfigurations` block from the `flake.nix` file; then
+add this to your NixOS configuration (either directly on
+`nixos/configuration.nix` or on a separate file and import it):
+
+```nix
+{ inputs, ... }: {
+  imports = [
+    # Import home-manager's NixOS module
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      # Import your home-manager configuration
+      your-username = import ../home-manager;
+    };
+  };
+}
+```
+
 ## Adding more hosts or users
 
 You can organize them by hostname and username on `nixos` and `home-manager`
