@@ -9,6 +9,12 @@
         '';
         path = ./minimal;
       };
+      minimal-nixosonly = {
+        description = ''
+          Similar to the minimal, but with only NixOS (not home-manager).
+        '';
+        path = ./minimal-nixosonly;
+      };
       standard = {
         description = ''
           Standard flake - augmented with boilerplate for custom packages, overlays, and reusable modules.
