@@ -1,5 +1,6 @@
 {
-  description = "NixOS + standalone home-manager config flakes to get you started!";
+  description =
+    "NixOS + standalone home-manager config flakes to get you started!";
   outputs = inputs: {
     templates = {
       minimal = {
