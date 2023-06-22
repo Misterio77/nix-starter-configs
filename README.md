@@ -115,21 +115,25 @@ add this to your NixOS configuration (either directly on
 `nixos/configuration.nix` or on a separate file and import it):
 
 ```nix
-{ inputs, ... }: {
+{ inputs, outputs, ... }: {
   imports = [
     # Import home-manager's NixOS module
     inputs.home-manager.nixosModules.home-manager
   ];
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs outputs; };
     users = {
       # Import your home-manager configuration
+      # Note: this assumes you have a `default.nix` in your home-manager directory.
+      # If not replace with the `your-username = import ../home-manager/home.nix` 
       your-username = import ../home-manager;
     };
   };
 }
 ```
+
+> Note: The above is applicable to the standard version; for the minimal version the `flake.nix` does not pass `outputs` through `specialArgs`.
 
 ## Adding more hosts or users
 
