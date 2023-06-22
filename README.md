@@ -126,7 +126,7 @@ add this to your NixOS configuration (either directly on
     users = {
       # Import your home-manager configuration
       # Note: this assumes you have a `default.nix` in your home-manager directory.
-      # If not replace with the `your-username = import ../home-manager/home.nix` 
+      # If not replace with `your-username = import ../home-manager/home.nix` 
       your-username = import ../home-manager;
     };
   };
