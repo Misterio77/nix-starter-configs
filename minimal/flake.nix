@@ -19,7 +19,7 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs: {
     # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
+    # Available through 'nixos-rebuild switch --flake .#your-hostname'
     nixosConfigurations = {
       # FIXME replace with your hostname
       your-hostname = nixpkgs.lib.nixosSystem {
