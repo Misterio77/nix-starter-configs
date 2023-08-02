@@ -131,8 +131,6 @@ add this to your NixOS configuration (either directly on
 }
 ```
 
-> Note: The above is applicable to the standard version; for the minimal version the `flake.nix` does not pass `outputs` through `specialArgs`.
-
 ## Adding more hosts or users
 
 You can organize them by hostname and username on `nixos` and `home-manager`
