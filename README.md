@@ -125,9 +125,7 @@ add this to your NixOS configuration (either directly on
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
       # Import your home-manager configuration
-      # Note: this assumes you have a `default.nix` in your home-manager directory.
-      # If not replace with `your-username = import ../home-manager/home.nix` 
-      your-username = import ../home-manager;
+      your-username = import ../home-manager/home.nix;
     };
   };
 }
