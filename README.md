@@ -206,6 +206,24 @@ Here's some awesome blog posts about it:
 - [NixOS: tmpfs as root](https://elis.nu/blog/2020/05/nixos-tmpfs-as-root/) and
   [tmpfs as home](https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/)
 
+Note that for `home-manager` to work correctly here, you need to set up its
+NixOS module, as described in the [previous section](#use-home-manager-as-a-nixos-module).
+Additionally, if you want the standalone `home-manager` tool to be available in
+your environment, you need to add it into your package list in
+`configuration.nix` like this:
+
+```nix
+# To install it for a specific user
+users.users = {
+  your-username = {
+    packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
+  };
+};
+
+# To install it for all users
+environment.systemPackages = [ inputs.home-manager.packages.${pkgs.system}.default ]
+```
+
 ## Adding custom packages
 
 Something you want to use that's not in nixpkgs yet? You can easily build and
