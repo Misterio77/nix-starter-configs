@@ -39,29 +39,13 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
-    # Generate a nixpkgs instance for each system
-    pkgsFor = forAllSystems (system:
-      import nixpkgs {
-        inherit system;
-        # You may configure this by adding overlays, enabling unfree, etc.
-        # This is NOT the nixpkgs instance your NixOS/home-manager configs will
-        # use, this is only used by 'nix build', 'nix shell', etc.
-        # overlays = [];
-      });
   in {
     # Your custom packages
     # Acessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (
-      system: import ./pkgs {pkgs = pkgsFor.${system};}
-    );
-    # Devshell for bootstrapping
-    # Acessible through 'nix develop' or 'nix-shell' (legacy)
-    devShells = forAllSystems (
-      system: import ./shell.nix {pkgs = pkgsFor.${system};}
-    );
+    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = forAllSystems (system: pkgsFor.${system}.alejandra);
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
