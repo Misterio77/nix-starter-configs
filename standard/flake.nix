@@ -28,14 +28,26 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
-    forAllSystems = nixpkgs.lib.genAttrs [
+    # Supported systems for your flake packages, shell, etc.
+    systems = [
       "aarch64-linux"
       "i686-linux"
       "x86_64-linux"
       "aarch64-darwin"
       "x86_64-darwin"
     ];
-    pkgsFor = forAllSystems (system: import nixpkgs {inherit system;});
+    # This is a function that generates an attribute by calling a function you
+    # pass to it, with each system as an argument
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+    # Generate a nixpkgs instance for each system
+    pkgsFor = forAllSystems (system:
+      import nixpkgs {
+        inherit system;
+        # You may configure this by adding overlays, enabling unfree, etc.
+        # This is NOT the nixpkgs instance your NixOS/home-manager configs will
+        # use, this is only used by 'nix build', 'nix shell', etc.
+        # overlays = [];
+      });
   in {
     # Your custom packages
     # Acessible through 'nix build', 'nix shell', etc
@@ -47,7 +59,6 @@
     devShells = forAllSystems (
       system: import ./shell.nix {pkgs = pkgsFor.${system};}
     );
-
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
     formatter = forAllSystems (system: pkgsFor.${system}.alejandra);
