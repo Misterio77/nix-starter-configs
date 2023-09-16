@@ -17,7 +17,12 @@
     # nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
     inherit (self) outputs;
   in {
     # NixOS configuration entrypoint
@@ -25,9 +30,9 @@
     nixosConfigurations = {
       # FIXME replace with your hostname
       your-hostname = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
+        specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
-        modules = [ ./nixos/configuration.nix ];
+        modules = [./nixos/configuration.nix];
       };
     };
 
@@ -37,9 +42,9 @@
       # FIXME replace with your username@hostname
       "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs outputs; };
+        extraSpecialArgs = {inherit inputs outputs;};
         # > Our main home-manager configuration file <
-        modules = [ ./home-manager/home.nix ];
+        modules = [./home-manager/home.nix];
       };
     };
   };
