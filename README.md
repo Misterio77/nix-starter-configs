@@ -131,6 +131,26 @@ add this to your NixOS configuration (either directly on
 }
 ```
 
+In this setup, the `home-manager` tool will not be installed (see
+[nix-community/home-manager#4342](https://github.com/nix-community/home-manager/pull/4342)).
+To rebuild your home configuration, use `nixos-rebuild` instead.
+
+But if you want to install the `home-manager` tool anyways, you can add the
+package into your configuration:
+
+```nix
+# To install it for a specific user
+users.users = {
+  your-username = {
+    packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
+  };
+};
+
+# To install it globally
+environment.systemPackages =
+  [ inputs.home-manager.packages.${pkgs.system}.default ];
+```
+
 ## Adding more hosts or users
 
 You can organize them by hostname and username on `nixos` and `home-manager`
@@ -208,21 +228,6 @@ Here's some awesome blog posts about it:
 
 Note that for `home-manager` to work correctly here, you need to set up its
 NixOS module, as described in the [previous section](#use-home-manager-as-a-nixos-module).
-Additionally, if you want the standalone `home-manager` tool to be available in
-your environment, you need to add it into your package list in
-`configuration.nix` like this:
-
-```nix
-# To install it for a specific user
-users.users = {
-  your-username = {
-    packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
-  };
-};
-
-# To install it for all users
-environment.systemPackages = [ inputs.home-manager.packages.${pkgs.system}.default ]
-```
 
 ## Adding custom packages
 
