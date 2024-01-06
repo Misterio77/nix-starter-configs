@@ -161,7 +161,7 @@ You can take a look at my (beware, here be reproductible dragons)
 
 NixOS makes it easy to share common configuration between hosts (you might want
 to create a common directory for these), while keeping everything in sync.
-home-manager can help you sync your environment (from editor to WM and
+Home-manager can help you sync your environment (from editor to WM and
 everything in between) anywhere you use it. Have fun!
 
 ## User password and secrets
@@ -215,9 +215,9 @@ on boot.
 
 For stuff that can't be managed through nix (such as games downloaded from
 steam, or logs), use [impermanence](https://github.com/nix-community/impermanence)
-for mounting stuff you to keep to a separate partition/volume (such as
-`/nix/persist` or `/persist`). This makes everything vanish by default, and you
-can keep track of what you specifically asked to be kept.
+to mount stuff you want to keep on a separate partition/volume (such as
+`/nix/persist` or `/persist`). This makes everything vanish by default, except
+what you specifically opt into keeping and tracking.
 
 Here's some awesome blog posts about it:
 - [Erase your darlings](https://grahamc.com/blog/erase-your-darlings)
@@ -279,7 +279,7 @@ here!
 
 ## Nix says my repo files don't exist, even though they do!
 
-Nix flakes only see files that git is currently tracked, so just `git add .`
+Nix flakes only see files that git is currently tracking, so just `git add .`
 and you should be good to go. Files on `.gitignore`, of course, are invisible
 to nix - this is to guarantee your build won't depend on anything that is not
 on your repo.
