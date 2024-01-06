@@ -101,7 +101,7 @@ nix flake init -t github:misterio77/nix-starter-config#standard
   - If you don't have home-manager installed, try `nix shell nixpkgs#home-manager`.
 
 And that's it, really! You're ready to have fun with your configurations using
-the latest and greatest nix3 flake-enabled command UX.
+the latest and greatest nix flake-enabled command UX.
 
 # What next?
 
