@@ -84,9 +84,10 @@
   services.openssh = {
     enable = true;
     settings = {
-      # Forbid root login through SSH.
+      # Opinionated: forbid root login through SSH.
       PermitRootLogin = "no";
-      # Use keys only. Remove if you want to SSH using password (not recommended)
+      # Opinionated: use keys only.
+      # Remove if you want to SSH using passwords
       PasswordAuthentication = false;
     };
   };
