@@ -87,6 +87,8 @@ nix flake init -t github:misterio77/nix-starter-config#standard
     yet.
 - Take a look at `flake.nix`, making sure to fill out anything marked with
   FIXME (required) or TODO (usually tips or optional stuff you might want)
+- Update your flake lock with `nix flake update`, so you get the latest
+  packages and modules
 - `git add` and `git push` your changes! Or at least copy them somewhere if
   you're on a live medium.
 
@@ -283,6 +285,14 @@ Nix flakes only see files that git is currently tracked, so just `git add .`
 and you should be good to go. Files on `.gitignore`, of course, are invisible
 to nix - this is to guarantee your build won't depend on anything that is not
 on your repo.
+
+## Nix installs the wrong version of software/fails to find new software
+
+The nix dependencies (such as `nixpkgs`) used by your configuration will
+strictly follow the `flake.lock` file, using the commits written into it when
+you (re)generated.
+
+To update your flake inputs, simply use `nix flake update`.
 
 <!--
 # Learning resources
