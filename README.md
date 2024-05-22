@@ -51,7 +51,7 @@ the other awesome learning resources).
 
 Learning the basics of what Nix (the package manager) is, how the Nix language
 works, and a bit of NixOS basics should get you up and running. Don't worry if
-it seems a little confusing at first. Get confortable with the basic concepts
+it seems a little confusing at first. Get comfortable with the basic concepts
 and come back here to get your feet wet, it's the best way to learn!
 
 ## The repo
