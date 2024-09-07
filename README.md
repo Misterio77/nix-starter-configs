@@ -120,14 +120,14 @@ add this to your NixOS configuration (either directly on
 `nixos/configuration.nix` or on a separate file and import it):
 
 ```nix
-{ inputs, outputs, ... }: {
+{ inputs, ... }: {
   imports = [
     # Import home-manager's NixOS module
     inputs.home-manager.nixosModules.home-manager
   ];
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = { inherit inputs; };
     users = {
       # Import your home-manager configuration
       your-username = import ../home-manager/home.nix;
