@@ -56,7 +56,7 @@ and come back here to get your feet wet, it's the best way to learn!
 
 ## The repo
 
-- [Install git](https://nixos.wiki/wiki/git), if you haven't already.
+- [Install git](https://wiki.nixos.org/wiki/git), if you haven't already.
 - Create a repository for your config, for example:
 ```bash
 cd ~/Documents
@@ -185,7 +185,7 @@ If you don't want to set your password imperatively, you can also use
 outside the nix store.
 
 There's also [more advanced options for secret
-management](https://nixos.wiki/wiki/Comparison_of_secret_managing_schemes),
+management](https://wiki.nixos.org/wiki/Comparison_of_secret_managing_schemes),
 including some that can include them (encrypted) into your config repo and/or
 nix store, be sure to check them out if you're interested.
 
@@ -260,7 +260,7 @@ Use the `overlays/default.nix` file for this.
 
 If you're creating patches, you can keep them on the `overlays` folder as well.
 
-See [the wiki article](https://nixos.wiki/wiki/Overlays) to see how it all
+See [the wiki article](https://wiki.nixos.org/wiki/Overlays) to see how it all
 works.
 
 ## Adding your own modules
@@ -273,7 +273,7 @@ Create a file for them on either `modules/nixos` or `modules/home-manager`. Be
 sure to also add them to the listing at `modules/nixos/default.nix` or
 `modules/home-manager/default.nix`.
 
-See [the wiki article](https://nixos.wiki/wiki/Module) to learn more about
+See [the wiki article](https://wiki.nixos.org/wiki/Module) to learn more about
 them.
 
 # Troubleshooting / FAQ
