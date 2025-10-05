@@ -34,6 +34,7 @@
     homeConfigurations = {
       # FIXME replace with your username@hostname
       "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
+        # FIXME replace with your proper arch
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         # > Our main home-manager configuration file <
