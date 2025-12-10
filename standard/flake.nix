@@ -67,7 +67,7 @@
       # FIXME replace with your username@hostname
       "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
         # Home-manager requires 'pkgs' instance
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # FIXME replace x86_64-linux with your architecure 
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # FIXME replace x86_64-linux with your architecture 
         extraSpecialArgs = {inherit inputs;};
         modules = [
           # > Our main home-manager configuration file <
