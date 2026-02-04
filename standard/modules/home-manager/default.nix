@@ -3,4 +3,5 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
+  gtk-theme = import ./gtk-theme.nix;
 }
