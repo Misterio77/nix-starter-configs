@@ -1,11 +1,11 @@
 # NixOS Niri Workstation Configuration
 
-NixOS config với **Niri compositor** + **Noctalia shell**, module-based architecture.
+NixOS config với **Niri compositor** + **Waybar**, module-based architecture.
 
 ## 🚀 Features
 
-- **NixOS 25.05** + Niri scrollable-tiling compositor
-- **Noctalia Shell** - Modern GTK4 panel
+- **NixOS 25.11** + Niri scrollable-tiling compositor
+- **Waybar** - Status bar cho Wayland
 - **Modular** - Easy enable/disable với `workstation.niri.enable`
 - **Theme** - Tokyonight + Rose Pine cursor
 - **Dev Ready** - Docker, PostgreSQL, Nginx
@@ -170,7 +170,7 @@ workstation.niri.enable = true;  # hoặc false
 ```
 
 **Bao gồm:**
-- Niri compositor + Noctalia shell
+- Niri compositor + Waybar status bar
 - GrETD display manager
 - Yazi file manager
 - Fuzzel launcher
@@ -183,7 +183,7 @@ workstation.niri.enable = true;  # hoặc false
 
 **System:**
 - Docker, PostgreSQL, Nginx
-- Niri + Noctalia + Xwayland-satellite
+- Niri compositor + Waybar + Xwayland-satellite
 - Wayland utilities
 
 **User:**
@@ -226,12 +226,6 @@ nix flake check
 nixos-rebuild build --flake .#your-hostname --show-trace
 ```
 
-### Noctalia không build?
-Comment trong `modules/nixos/niri-workstation.nix`:
-```nix
-# inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-```
-
 ### Theme không apply?
 ```bash
 rm -rf ~/.cache/gtk-*
@@ -242,17 +236,18 @@ home-manager switch --flake .#your-username@your-hostname
 
 ## 📝 Notes
 
-- **NixOS Version:** 25.05
+- **NixOS Version:** 25.11
 - **Theme:** Tokyonight-Dark + Rose Pine cursor
-- **Shell:** Noctalia (auto-start)
+- **Status Bar:** Waybar (auto-start, config included)
 - **Auto-login:** Enabled via GrETD
+- **Waybar config:** `waybar-config.json` được copy vào `~/.config/waybar/config`
 
 ---
 
 ## 🔗 Links
 
 - [Niri](https://github.com/YaLTeR/niri) | [Niri Flake](https://github.com/sodiboo/niri-flake)
-- [Noctalia](https://github.com/sodiboo/noctalia)
+- [Waybar](https://github.com/Alexays/Waybar) - Status bar
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
 
 **Enjoy! 🎉**

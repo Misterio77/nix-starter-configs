@@ -10,7 +10,6 @@
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
-    inputs.self.homeManagerModules.gtk-theme
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
@@ -87,13 +86,10 @@
     # Niri utilities
     fuzzel  # Application launcher for Wayland
     mako    # Notification daemon for Wayland
-    waybar  # Status bar (alternative to noctalia if needed)
     swaylock # Screen locker
     grim     # Screenshot utility
     slurp    # Region selector for screenshots
   ] ++ [
-    # Noctalia shell from flake input
-    inputs.noctalia.packages.${pkgs.system}.default
   ];
 
   # Niri configuration
@@ -115,9 +111,7 @@
         border.width = 2;
       };
 
-      # Spawn Noctalia shell at startup
       spawn-at-startup = [
-        { command = ["noctalia"]; }
         { command = ["mako"]; }  # Notification daemon
       ];
 

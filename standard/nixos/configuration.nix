@@ -23,6 +23,9 @@
     ./hardware-configuration.nix
   ];
 
+  programs.niri.enable = true;
+  services.displayManager.sddm.enable = true;
+
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -69,7 +72,6 @@
 
   # FIXME: Add the rest of your current configuration
 
-  # Enable Niri workstation environment with Noctalia
   workstation.niri.enable = true;
 
   # XDG Desktop Portal for Wayland
