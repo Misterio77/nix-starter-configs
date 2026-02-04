@@ -1,0 +1,16 @@
+# Nix build results
+result
+result-*
+
+# Hardware configuration (specific to each machine)
+nixos/hardware-configuration.nix
+
+# Backup files
+*.bak
+*~
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

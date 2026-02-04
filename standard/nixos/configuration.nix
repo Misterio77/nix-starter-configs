@@ -10,7 +10,7 @@
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
-    # inputs.self.nixosModules.example
+    inputs.self.nixosModules.niri-workstation
 
     # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
@@ -22,6 +22,9 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
   ];
+
+  programs.niri.enable = true;
+  services.displayManager.sddm.enable = true;
 
   nixpkgs = {
     # You can add overlays here
@@ -69,23 +72,53 @@
 
   # FIXME: Add the rest of your current configuration
 
+  workstation.niri.enable = true;
+
+  # XDG Desktop Portal for Wayland
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+  };
+
+  # System services
+  services.docker.enable = true;
+  services.postgresql.enable = true;
+  services.nginx.enable = true;
+
+  # Drivers & hardware
+  hardware.nvidia.enable = true;
+  hardware.bluetooth.enable = true;
+
+  # Packages cho TẤT CẢ users
+  environment.systemPackages = with pkgs; [
+    vim
+    # Wayland utilities
+    wayland
+    wayland-utils
+    wl-clipboard
+  ];
+
+  # Bootloader, kernel
+  boot.loader.systemd-boot.enable = true;
+
+  # Network, firewall
+  networking.firewall.enable = true;
+
   # TODO: Set your hostname
-  networking.hostName = "your-hostname";
+  networking.hostName = "nixos";
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
     # FIXME: Replace with your username
-    your-username = {
+    river = {
       # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "correcthorsebatterystaple";
+      initialPassword = "river";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = ["wheel"];
+      extraGroups = ["wheel" "docker"];
     };
   };
 
@@ -103,5 +136,5 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "25.05";
 }
