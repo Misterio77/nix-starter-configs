@@ -18,6 +18,9 @@
     # Niri home-manager module
     inputs.niri.homeModules.niri
 
+    # Catppuccin theme module
+    inputs.catppuccin.homeManagerModules.catppuccin
+
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
   ];
@@ -60,6 +63,16 @@
   # Enable home-manager
   programs.home-manager.enable = true;
 
+  # Font configuration
+  fonts.fontconfig.enable = true;
+
+  # Catppuccin theme configuration
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";  # Options: latte, frappe, macchiato, mocha
+    accent = "mauve";  # Options: blue, flamingo, green, lavender, maroon, mauve, peach, pink, red, rosewater, sapphire, sky, teal, yellow
+  };
+
   # Dotfiles & config
   programs.git = {
     enable = true;
@@ -75,7 +88,10 @@
     enable = true;
     settings = {
       window.opacity = 0.9;
-      font.size = 13.0;
+      font = {
+        normal.family = "Lilex Nerd Font Mono";
+        size = 13.0;
+      };
     };
   };
 
@@ -87,10 +103,12 @@
     # Niri utilities
     fuzzel  # Application launcher for Wayland
     mako    # Notification daemon for Wayland
-    waybar  # Status bar (alternative to noctalia if needed)
+    # waybar removed - Noctalia provides its own bar
     swaylock # Screen locker
     grim     # Screenshot utility
     slurp    # Region selector for screenshots
+    # Fonts
+    (nerdfonts.override { fonts = [ "Lilex" ]; })
   ] ++ [
     # Noctalia shell from flake input
     inputs.noctalia.packages.${pkgs.system}.default
@@ -170,5 +188,5 @@
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "25.05";
+  home.stateVersion = "24.11";
 }
