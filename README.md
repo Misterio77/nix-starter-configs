@@ -1,5 +1,5 @@
 > [!IMPORTANT]  
-> This repo is a little out of date at the moment, and is pending a refactor. Please check official documentation for NixOS and home-manager to make sure you're doing things right. See https://github.com/Misterio77/nix-starter-configs/issues/86 for more info.
+> This repo might become slightly out of date as things change fast. Please check official documentation for NixOS and home-manager to make sure you're doing things right. See https://github.com/Misterio77/nix-starter-configs/issues/86 for more info and additional learning resources you might be interested in :D
 
 # Nix Starter Config
 
